@@ -2846,7 +2846,7 @@ id,category,question,options,correct_answer,difficulty
 2845,Entertainment: Video Games,"In Monster Hunter Generations, guild style is a type of hunting style.",True | False,True,medium
 2846,Science & Nature,Who developed the first successful polio vaccine in the 1950s?,Frederick Robbins | Jonas Salk | John F. Enders | Thomas Weller,Jonas Salk,medium
 2847,Entertainment: Video Games,"In ""Need for Speed: Porsche Unleashed"", the player can only drive cars manufactured by Porsche.",True | False,True,easy
-2848,Geography,Which state of the United States is the smallest?,Vermont | Massachusetts | Rhode Island  | Maine,Rhode Island ,medium
+2848,Geography,Which state of the United States is the smallest?,Vermont | Massachusetts | Rhode Island  | Maine,Rhode Island,medium
 2849,Entertainment: Video Games,"The game series ""Titanfall"" runs on the Unreal Engine.",False | True,False,medium
 2850,Entertainment: Video Games,"Which of these symbols can be seen on the shirt of the 1993 video game character, Bubsy T. Bobcat?",An exclamation point | The letter B | Nothing | A question mark,An exclamation point,medium
 2851,General Knowledge,When someone is inexperienced they are said to be what color?,Blue | Yellow | Red | Green,Green,easy
@@ -3133,7 +3133,7 @@ id,category,question,options,correct_answer,difficulty
 3132,Entertainment: Video Games,"In the Mario Kart series, which game introduced the ""Shield Drifting"" mechanic?",Mario Kart Arcade GP DX | Mario Kart DS | Mario Kart: Double Dash | Mario Kart Super Circuit,Mario Kart Arcade GP DX,hard
 3133,History,"One of the deadliest pandemics, the ""Spanish Flu"", killed off what percentage of the human world population at the time?",6 to 10 percent | 3 to 6 percent | less than 1 percent | 1 to 3 percent,3 to 6 percent,medium
 3134,General Knowledge,Chartreuse is a color between yellow and what?,Green | Red | Black | Purple,Green,hard
-3135,History,What was the total length of the Titanic?,1042 ft | 317.6 m | 759 ft | 231.3 m | 825 ft | 251.5 m | 882 ft | 268.8 m,882 ft | 268.8 m,medium
+3135,History,What was the total length of the Titanic?,1042 ft | 317.6 m | 231.3 m | 268.8 m | 268.8 m,medium
 3136,Celebrities,Which celebrity announced his presidency in 2015?,Kanye West | Donald Trump | Miley Cyrus | Leonardo DiCaprio,Kanye West,easy
 3137,History,"Which country attacked the USS Liberty on June 8, 1967?",Saudi Arabia | Israel | Syria | Iran,Israel,medium
 3138,Entertainment: Music,Which of these is the name of a song by Tears for Fears?,Shriek | Scream | Yell | Shout,Shout,easy

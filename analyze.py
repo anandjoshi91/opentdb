@@ -22,29 +22,33 @@ def analyze_trivia_data(csv_file: str = "trivia_questions.csv"):
     # Data structures to store analysis
     categories = defaultdict(lambda: {
         'total_questions': 0,
-        'question_types': Counter(),
         'difficulties': Counter(),
         'sample_questions': []
     })
     
     total_questions = 0
     all_difficulties = Counter()
-    all_question_types = Counter()
     
     try:
         with open(csv_file, 'r', newline='', encoding='utf-8') as csvfile:
             reader = csv.DictReader(csvfile)
             
+            # Verify expected columns exist
+            expected_columns = {'id', 'category', 'question', 'options', 'correct_answer', 'difficulty'}
+            if not expected_columns.issubset(set(reader.fieldnames)):
+                missing = expected_columns - set(reader.fieldnames)
+                print(f"❌ Error: Missing expected columns: {missing}")
+                print(f"Found columns: {reader.fieldnames}")
+                return
+            
             for row in reader:
                 category = row['category']
-                question_type = row['type']
                 difficulty = row['difficulty']
                 question = row['question']
                 
                 # Update counters
                 total_questions += 1
                 categories[category]['total_questions'] += 1
-                categories[category]['question_types'][question_type] += 1
                 categories[category]['difficulties'][difficulty] += 1
                 
                 # Store sample questions (max 3 per category)
@@ -53,7 +57,6 @@ def analyze_trivia_data(csv_file: str = "trivia_questions.csv"):
                 
                 # Global counters
                 all_difficulties[difficulty] += 1
-                all_question_types[question_type] += 1
         
     except Exception as e:
         print(f"❌ Error reading CSV file: {e}")
@@ -67,11 +70,6 @@ def analyze_trivia_data(csv_file: str = "trivia_questions.csv"):
     print(f"\n📊 OVERALL STATISTICS")
     print(f"Total Questions: {total_questions:,}")
     print(f"Total Categories: {len(categories)}")
-    
-    print(f"\n📝 Question Types (Overall):")
-    for q_type, count in all_question_types.most_common():
-        percentage = (count / total_questions) * 100
-        print(f"  • {q_type.title()}: {count:,} ({percentage:.1f}%)")
     
     print(f"\n⭐ Difficulty Levels (Overall):")
     for difficulty, count in all_difficulties.most_common():
@@ -90,12 +88,6 @@ def analyze_trivia_data(csv_file: str = "trivia_questions.csv"):
         print(f"\n{i}. {category}")
         print(f"   📊 Questions: {data['total_questions']:,} ({percentage:.1f}% of total)")
         
-        # Question types for this category
-        print(f"   📝 Question Types:")
-        for q_type, count in data['question_types'].most_common():
-            type_percentage = (count / data['total_questions']) * 100
-            print(f"      • {q_type.title()}: {count} ({type_percentage:.1f}%)")
-        
         # Difficulties for this category
         print(f"   ⭐ Difficulties:")
         for difficulty, count in data['difficulties'].most_common():
@@ -111,27 +103,25 @@ def analyze_trivia_data(csv_file: str = "trivia_questions.csv"):
     # Summary table
     print(f"\n📋 QUICK SUMMARY TABLE")
     print("=" * 50)
-    print(f"{'Category':<35} {'Questions':<10} {'Multiple':<8} {'Boolean':<7} {'Easy':<5} {'Medium':<6} {'Hard':<4}")
-    print("-" * 80)
+    print(f"{'Category':<40} {'Questions':<10} {'Easy':<5} {'Medium':<6} {'Hard':<4}")
+    print("-" * 70)
     
     for category, data in sorted_categories:
-        multiple_count = data['question_types'].get('multiple', 0)
-        boolean_count = data['question_types'].get('boolean', 0)
         easy_count = data['difficulties'].get('easy', 0)
         medium_count = data['difficulties'].get('medium', 0)
         hard_count = data['difficulties'].get('hard', 0)
         
         # Truncate long category names
-        display_category = category[:32] + "..." if len(category) > 32 else category
+        display_category = category[:37] + "..." if len(category) > 37 else category
         
-        print(f"{display_category:<35} {data['total_questions']:<10} {multiple_count:<8} {boolean_count:<7} {easy_count:<5} {medium_count:<6} {hard_count:<4}")
+        print(f"{display_category:<40} {data['total_questions']:<10} {easy_count:<5} {medium_count:<6} {hard_count:<4}")
     
     # Top categories
     print(f"\n🏆 TOP 10 CATEGORIES BY QUESTION COUNT")
     print("=" * 50)
     for i, (category, data) in enumerate(sorted_categories[:10], 1):
         percentage = (data['total_questions'] / total_questions) * 100
-        print(f"{i:2d}. {category:<40} {data['total_questions']:>4} questions ({percentage:4.1f}%)")
+        print(f"{i:2d}. {category:<45} {data['total_questions']:>4} questions ({percentage:4.1f}%)")
     
     # Distribution insights
     print(f"\n💡 INSIGHTS")
@@ -144,22 +134,39 @@ def analyze_trivia_data(csv_file: str = "trivia_questions.csv"):
     print(f"• Most questions: {most_questions_cat} ({most_questions_data['total_questions']} questions)")
     print(f"• Least questions: {least_questions_cat} ({least_questions_data['total_questions']} questions)")
     
-    # Find categories with only one type of question
-    single_type_categories = []
-    for category, data in categories.items():
-        if len(data['question_types']) == 1:
-            single_type_categories.append((category, list(data['question_types'].keys())[0]))
+    # Find difficulty distribution insights
+    easiest_categories = []
+    hardest_categories = []
     
-    if single_type_categories:
-        print(f"• Categories with single question type ({len(single_type_categories)}):")
-        for cat, q_type in single_type_categories[:5]:  # Show first 5
-            print(f"  - {cat}: only {q_type}")
-        if len(single_type_categories) > 5:
-            print(f"  ... and {len(single_type_categories) - 5} more")
+    for category, data in categories.items():
+        total_cat_questions = data['total_questions']
+        if total_cat_questions >= 10:  # Only consider categories with at least 10 questions
+            easy_percentage = (data['difficulties'].get('easy', 0) / total_cat_questions) * 100
+            hard_percentage = (data['difficulties'].get('hard', 0) / total_cat_questions) * 100
+            
+            if easy_percentage >= 60:  # 60% or more easy questions
+                easiest_categories.append((category, easy_percentage))
+            if hard_percentage >= 40:  # 40% or more hard questions
+                hardest_categories.append((category, hard_percentage))
+    
+    if easiest_categories:
+        easiest_categories.sort(key=lambda x: x[1], reverse=True)
+        print(f"• Categories with mostly easy questions ({len(easiest_categories)}):")
+        for cat, percentage in easiest_categories[:3]:  # Show top 3
+            print(f"  - {cat}: {percentage:.1f}% easy")
+    
+    if hardest_categories:
+        hardest_categories.sort(key=lambda x: x[1], reverse=True)
+        print(f"• Categories with many hard questions ({len(hardest_categories)}):")
+        for cat, percentage in hardest_categories[:3]:  # Show top 3
+            print(f"  - {cat}: {percentage:.1f}% hard")
     
     # Average questions per category
     avg_questions = total_questions / len(categories)
     print(f"• Average questions per category: {avg_questions:.1f}")
+    
+    # Show ID range
+    print(f"• Question IDs range from 1 to {total_questions}")
     
     print(f"\n✅ Analysis complete! Data from '{csv_file}' successfully analyzed.")
 
