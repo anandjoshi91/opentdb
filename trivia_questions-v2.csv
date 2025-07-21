@@ -2513,7 +2513,7 @@ id,category,question,options,correct_answer,difficulty
 2512,History,Martin Luther King Jr. and Anne Frank were born the same year. ,False | True,True,medium
 2513,Sports,How many French Open's did Björn Borg win?,2 | 6 | 4 | 9,6,medium
 2514,Entertainment: Japanese Anime & Manga,In the anime Assassination Classroom what is the class that Korosensei teaches?,Class 3-A | Class 3-D | Class 3-B | Class 3-E,Class 3-E,medium
-2515,Entertainment: Video Games,"Psych-Horror ""Eternal Darkness: Sanity's Requiem"", developed by Silicon Knights in 2002, was published by who and on what platform?",Sega® Enterprises Co. Ltd. | Dreamcast™ | Sony® Computer Entertainment™ Inc. | PlayStation® 2 | Microsoft® Game Studios™ | XBox™ | Nintendo® Co. Ltd. | GameCube™,Nintendo® Co. Ltd. | GameCube™,medium
+2515,Entertainment: Video Games,"Psych-Horror ""Eternal Darkness: Sanity's Requiem"", developed by Silicon Knights in 2002, was published by who and on what platform?",Sega® Enterprises Co. Ltd. ; Dreamcast™ | Sony® Computer Entertainment™ Inc. ; PlayStation® 2 | Microsoft® Game Studios™ ; XBox™ | Nintendo® Co. Ltd. ; GameCube™,Nintendo® Co. Ltd. ; GameCube™,medium
 2516,Entertainment: Video Games,"In the Kingdom Hearts series, which is not an optional boss you can fight?",Julius | Kurt Zisa | Sephiroth | Master Yen Sid,Master Yen Sid,hard
 2517,Entertainment: Music,Which 80s band is fronted by singer/guitarist Robert Smith?,Echo & the Bunnymen | The Cure | The Smiths | New Order,The Cure,easy
 2518,Entertainment: Video Games,"In Dead Space 2, the 'Hand Cannon' is a large foam finger.",False | True,True,easy
